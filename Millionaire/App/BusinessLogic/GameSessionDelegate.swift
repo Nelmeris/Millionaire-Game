@@ -9,6 +9,7 @@
 import Foundation
 
 protocol GameSessionDelegate {
+    var result: Observable<Float> { get }
     func scoreIncrease();
     func finish();
 }

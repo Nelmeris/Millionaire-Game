@@ -1,5 +1,5 @@
 //
-//  Question.swift
+//  GameResult.swift
 //  Millionaire
 //
 //  Created by Artem Kufaev on 16.12.2019.
@@ -8,8 +8,7 @@
 
 import Foundation
 
-struct Question: Hashable, Codable {
-    let question: String
-    let answers: [String]
-    let correctAnswerId: Int
+struct GameResult: Codable {
+    let date: Date
+    let score: Float
 }

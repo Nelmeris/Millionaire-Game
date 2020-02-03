@@ -10,7 +10,7 @@ import UIKit
 
 class GameViewController: UIViewController {
     
-    let questions: [Question] = Game.shared.questions
+    var questions: [Question]!
     
     var currentQuestion = -1
     
@@ -22,12 +22,16 @@ class GameViewController: UIViewController {
     @IBOutlet weak var fourthAnswerButton: UIButton!
     
     @IBOutlet weak var questionTextView: UITextView!
+    @IBOutlet weak var progressLabel: UILabel!
+    @IBOutlet weak var questionNumberLabel: UILabel!
     
     var delegate: GameSessionDelegate? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         AppUtility.lockOrientation(.landscapeLeft, andRotateTo: .landscapeLeft)
+        
+        questions = Game.shared.sortType.getSorter().sortQuestions(Game.shared.questions)
         
         configureButton(firstAnswerButton)
         configureButton(secondAnswerButton)
@@ -36,6 +40,11 @@ class GameViewController: UIViewController {
         configureTextView(questionTextView)
         
         nextQuestion()
+        
+        delegate?.result.addObserver(self, options: [.initial, .old, .new]) { [weak self] result, _ in
+            guard let `self` = self else { return }
+            self.progressLabel.text = "\(NSString(format: "%.0f", result * 100))%"
+        }
     }
     
     func configureButton(_ button: UIButton) {
@@ -62,6 +71,7 @@ class GameViewController: UIViewController {
             return
         }
         currentQuestion += 1
+        questionNumberLabel.text = "Вопрос №\(currentQuestion + 1)"
         let question = questions[currentQuestion]
         firstAnswerButton.setTitle(question.answers[0], for: .normal)
         secondAnswerButton.setTitle(question.answers[1], for: .normal)
