@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Millionaire Game
+//  Millionaire
 //
 //  Created by Artem Kufaev on 16.12.2019.
 //  Copyright © 2019 Artem Kufaev. All rights reserved.
@@ -11,7 +11,11 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var orientationLock = UIInterfaceOrientationMask.all
 
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+            return self.orientationLock
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
